@@ -1,0 +1,27 @@
+[package]
+name = "kvlite-consumer-example"
+version = "0.0.0"
+publish = false
+
+# Edition 2021 on purpose. The Kvlite crates are edition 2024, and a consumer on an
+# older edition has to keep working — this is where that gets proved.
+edition = "2021"
+
+# Detached from the workspace, deliberately. This crate exists to prove Kvlite works
+# when consumed from outside, which is the one thing a workspace member cannot test:
+# inside a workspace, cargo unifies features across members, so a crate can compile
+# only because a sibling turned something on.
+[workspace]
+
+[dependencies]
+# Path dependencies so CI tests the checkout it is running against. A real consumer
+# writes the git form instead, exactly as the README shows:
+#   kvlite-core = { git = "https://github.com/MasterOogway0220/redis", package = "kvlite-core" }
+kvlite-core = { path = "../../crates/kvlite-core" }
+
+[dev-dependencies]
+kvlite-testing = { path = "../../crates/kvlite-testing" }
+# A real, third-party Redis client. Wire compatibility is the whole product claim,
+# and this is what checks it.
+redis = "0.27"
+tokio = { version = "1", features = ["rt", "macros"] }

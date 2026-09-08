@@ -116,6 +116,25 @@ jobs:
           done
           exit $status
 
+  consumer:
+    name: consumed from outside
+    # Rule 3 says every crate must build in isolation. This goes further and checks
+    # it is *usable* in isolation: a detached crate on an older edition, driving each
+    # door the way the root README tells an adopter to, against a real third-party
+    # Redis client. It also keeps the root README honest — unlike the crate READMEs,
+    # it is not a doctest, so nothing else would catch an example rotting.
+    #
+    # This exists because a bug got through everything else: the test fixture used to
+    # share the caller's runtime, which deadlocks a blocking Redis client on the
+    # default single-threaded #[tokio::test]. Every in-workspace test passed.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo run --manifest-path examples/consumer/Cargo.toml
+      - run: cargo test --manifest-path examples/consumer/Cargo.toml
+
   supply-chain:
     runs-on: ubuntu-latest
     steps:

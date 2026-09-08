@@ -1,3 +1,7 @@
-/target
+target/
 **/*.rs.bk
 *.pdb
+
+# The example consumer resolves fresh against current dependencies each run, which
+# is part of what it is checking.
+/examples/consumer/Cargo.lock
