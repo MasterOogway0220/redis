@@ -68,8 +68,6 @@ The READMEs are included as each crate's rustdoc, so **every example in them is 
 
 [`kvlite-packaging.md`](kvlite-packaging.md) is the governing document: the crate split, the four dependency rules and how they are enforced, the public API stability policy, versioning, and the anti-goals. It constrains code layout from the first commit, because retrofitting it later means moving types across crate boundaries — a breaking change for anyone who adopted early.
 
-The [.NET original](docs/kvlite-packaging-dotnet-v1.0-ARCHIVED.md) is kept for reference. Its argument survived the port to Rust intact; every mechanism in it did not.
-
 ## Licence
 
 MIT.
