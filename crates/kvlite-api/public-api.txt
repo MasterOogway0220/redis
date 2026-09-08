@@ -1,0 +1,116 @@
+pub mod kvlite_api
+#[non_exhaustive] pub enum kvlite_api::KvError
+pub kvlite_api::KvError::InvalidExpiry
+pub kvlite_api::KvError::NaNResult
+pub kvlite_api::KvError::NotAFloat
+pub kvlite_api::KvError::NotAnInteger
+pub kvlite_api::KvError::OutOfRange
+pub kvlite_api::KvError::WrongType
+impl core::clone::Clone for kvlite_api::KvError
+pub fn kvlite_api::KvError::clone(&self) -> kvlite_api::KvError
+impl core::cmp::Eq for kvlite_api::KvError
+impl core::cmp::PartialEq for kvlite_api::KvError
+pub fn kvlite_api::KvError::eq(&self, &kvlite_api::KvError) -> bool
+impl core::error::Error for kvlite_api::KvError
+impl core::fmt::Debug for kvlite_api::KvError
+pub fn kvlite_api::KvError::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::fmt::Display for kvlite_api::KvError
+pub fn kvlite_api::KvError::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::hash::Hash for kvlite_api::KvError
+pub fn kvlite_api::KvError::hash<__H: core::hash::Hasher>(&self, &mut __H)
+impl core::marker::Copy for kvlite_api::KvError
+impl core::marker::StructuralPartialEq for kvlite_api::KvError
+impl core::marker::Freeze for kvlite_api::KvError
+impl core::marker::Send for kvlite_api::KvError
+impl core::marker::Sync for kvlite_api::KvError
+impl core::marker::Unpin for kvlite_api::KvError
+impl core::marker::UnsafeUnpin for kvlite_api::KvError
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_api::KvError
+impl core::panic::unwind_safe::UnwindSafe for kvlite_api::KvError
+#[non_exhaustive] pub enum kvlite_api::KvValueType
+pub kvlite_api::KvValueType::Hash
+pub kvlite_api::KvValueType::List
+pub kvlite_api::KvValueType::None
+pub kvlite_api::KvValueType::Set
+pub kvlite_api::KvValueType::SortedSet
+pub kvlite_api::KvValueType::String
+impl kvlite_api::KvValueType
+pub const fn kvlite_api::KvValueType::wire_name(self) -> &'static str
+impl core::clone::Clone for kvlite_api::KvValueType
+pub fn kvlite_api::KvValueType::clone(&self) -> kvlite_api::KvValueType
+impl core::cmp::Eq for kvlite_api::KvValueType
+impl core::cmp::PartialEq for kvlite_api::KvValueType
+pub fn kvlite_api::KvValueType::eq(&self, &kvlite_api::KvValueType) -> bool
+impl core::fmt::Debug for kvlite_api::KvValueType
+pub fn kvlite_api::KvValueType::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::hash::Hash for kvlite_api::KvValueType
+pub fn kvlite_api::KvValueType::hash<__H: core::hash::Hasher>(&self, &mut __H)
+impl core::marker::Copy for kvlite_api::KvValueType
+impl core::marker::StructuralPartialEq for kvlite_api::KvValueType
+impl core::marker::Freeze for kvlite_api::KvValueType
+impl core::marker::Send for kvlite_api::KvValueType
+impl core::marker::Sync for kvlite_api::KvValueType
+impl core::marker::Unpin for kvlite_api::KvValueType
+impl core::marker::UnsafeUnpin for kvlite_api::KvValueType
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_api::KvValueType
+impl core::panic::unwind_safe::UnwindSafe for kvlite_api::KvValueType
+#[non_exhaustive] pub enum kvlite_api::KvWriteCondition
+pub kvlite_api::KvWriteCondition::Always
+pub kvlite_api::KvWriteCondition::Exists
+pub kvlite_api::KvWriteCondition::NotExists
+impl core::clone::Clone for kvlite_api::KvWriteCondition
+pub fn kvlite_api::KvWriteCondition::clone(&self) -> kvlite_api::KvWriteCondition
+impl core::cmp::Eq for kvlite_api::KvWriteCondition
+impl core::cmp::PartialEq for kvlite_api::KvWriteCondition
+pub fn kvlite_api::KvWriteCondition::eq(&self, &kvlite_api::KvWriteCondition) -> bool
+impl core::default::Default for kvlite_api::KvWriteCondition
+pub fn kvlite_api::KvWriteCondition::default() -> kvlite_api::KvWriteCondition
+impl core::fmt::Debug for kvlite_api::KvWriteCondition
+pub fn kvlite_api::KvWriteCondition::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::hash::Hash for kvlite_api::KvWriteCondition
+pub fn kvlite_api::KvWriteCondition::hash<__H: core::hash::Hasher>(&self, &mut __H)
+impl core::marker::Copy for kvlite_api::KvWriteCondition
+impl core::marker::StructuralPartialEq for kvlite_api::KvWriteCondition
+impl core::marker::Freeze for kvlite_api::KvWriteCondition
+impl core::marker::Send for kvlite_api::KvWriteCondition
+impl core::marker::Sync for kvlite_api::KvWriteCondition
+impl core::marker::Unpin for kvlite_api::KvWriteCondition
+impl core::marker::UnsafeUnpin for kvlite_api::KvWriteCondition
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_api::KvWriteCondition
+impl core::panic::unwind_safe::UnwindSafe for kvlite_api::KvWriteCondition
+#[non_exhaustive] pub struct kvlite_api::KvOptions
+pub kvlite_api::KvOptions::clock: core::option::Option<alloc::sync::Arc<dyn kvlite_api::KvClock>>
+pub kvlite_api::KvOptions::keyspace_count: usize
+impl core::clone::Clone for kvlite_api::KvOptions
+pub fn kvlite_api::KvOptions::clone(&self) -> kvlite_api::KvOptions
+impl core::default::Default for kvlite_api::KvOptions
+pub fn kvlite_api::KvOptions::default() -> Self
+impl core::fmt::Debug for kvlite_api::KvOptions
+pub fn kvlite_api::KvOptions::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Freeze for kvlite_api::KvOptions
+impl core::marker::Send for kvlite_api::KvOptions
+impl core::marker::Sync for kvlite_api::KvOptions
+impl core::marker::Unpin for kvlite_api::KvOptions
+impl core::marker::UnsafeUnpin for kvlite_api::KvOptions
+impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_api::KvOptions
+impl !core::panic::unwind_safe::UnwindSafe for kvlite_api::KvOptions
+pub trait kvlite_api::Keyspace
+pub fn kvlite_api::Keyspace::clear(&self)
+pub fn kvlite_api::Keyspace::contains(&self, &[u8]) -> bool
+pub fn kvlite_api::Keyspace::expire(&self, &[u8], core::option::Option<core::time::Duration>) -> bool
+pub fn kvlite_api::Keyspace::get(&self, &[u8]) -> kvlite_api::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_api::Keyspace::incr_by(&self, &[u8], i64) -> kvlite_api::KvResult<i64>
+pub fn kvlite_api::Keyspace::index(&self) -> usize
+pub fn kvlite_api::Keyspace::is_empty(&self) -> bool
+pub fn kvlite_api::Keyspace::kind(&self, &[u8]) -> kvlite_api::KvValueType
+pub fn kvlite_api::Keyspace::len(&self) -> u64
+pub fn kvlite_api::Keyspace::remove(&self, &[u8]) -> bool
+pub fn kvlite_api::Keyspace::set(&self, &[u8], &[u8], core::option::Option<core::time::Duration>, kvlite_api::KvWriteCondition, bool) -> bool
+pub fn kvlite_api::Keyspace::strlen(&self, &[u8]) -> kvlite_api::KvResult<u64>
+pub fn kvlite_api::Keyspace::time_to_live(&self, &[u8]) -> core::option::Option<core::time::Duration>
+pub trait kvlite_api::KvClock: core::marker::Send + core::marker::Sync + 'static
+pub fn kvlite_api::KvClock::now_millis(&self) -> u64
+pub trait kvlite_api::Store
+pub fn kvlite_api::Store::keyspace(&self, usize) -> core::option::Option<&dyn kvlite_api::Keyspace>
+pub fn kvlite_api::Store::keyspace_count(&self) -> usize
+pub type kvlite_api::KvResult<T> = core::result::Result<T, kvlite_api::KvError>

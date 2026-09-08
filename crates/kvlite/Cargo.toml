@@ -1,0 +1,30 @@
+[package]
+name = "kvlite"
+description = "The Kvlite server binary. A Redis-compatible key-value server. Install with `cargo install kvlite`."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+
+# Bin target only, and deliberately so. `kvlite` is the name people would reach for
+# as a batteries-included umbrella crate, which section 12 of the packaging spec
+# forbids. Having no lib target makes `cargo add kvlite` useless and
+# `cargo install kvlite` exactly right.
+autolib = false
+
+[[bin]]
+name = "kvlite"
+path = "src/main.rs"
+
+[dependencies]
+kvlite-core.workspace = true
+kvlite-server.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "signal"] }
+
+[lints]
+workspace = true

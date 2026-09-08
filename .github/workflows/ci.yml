@@ -1,0 +1,141 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    # The test double claims to run on Linux, Windows and macOS with no Docker.
+    # A claim like that is only true if CI proves it on every push.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --all-targets --locked
+      - run: cargo test --workspace --doc --locked
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets --locked
+
+  msrv:
+    name: MSRV
+    # Section 8 makes the MSRV part of the contract, so it is verified with that
+    # exact toolchain rather than assumed.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.85.0
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --workspace --all-targets --locked
+
+  rules:
+    name: dependency rules
+    # Rules 1, 2 and 3 from section 4, plus the no_std floor from section 9.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: thumbv7em-none-eabihf
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo xtask check-layering
+      - run: cargo xtask check-no-std
+      - run: cargo xtask check-isolated
+
+  features:
+    name: feature powerset
+    # The Rust-specific half of Rule 3. Inside a workspace, cargo unifies features
+    # across members, so a crate can compile only because a sibling turned something
+    # on. This is what catches that before a consumer does.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@cargo-hack
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo hack check --workspace --feature-powerset --no-dev-deps --locked
+
+  public-api:
+    name: public API surface
+    # Section 5. Any change to the public surface fails until the committed snapshot
+    # is updated, which makes the API change a visible line in the pull request.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-public-api
+      - uses: Swatinem/rust-cache@v2
+      - name: Regenerate and diff
+        run: |
+          set -euo pipefail
+          status=0
+          for crate in kvlite-api kvlite-resp kvlite-core kvlite-server kvlite-testing; do
+            snapshot="crates/$crate/public-api.txt"
+            cargo public-api --package "$crate" --simplified > /tmp/actual.txt
+            if ! diff -u "$snapshot" /tmp/actual.txt; then
+              echo "::error::$crate's public API changed. Run: cargo public-api -p $crate --simplified > $snapshot"
+              status=1
+            fi
+          done
+          exit $status
+
+  fuzz:
+    name: fuzz the codec
+    # The decoder is the one component that reads bytes straight off the network,
+    # which makes it the most security-sensitive thing we own. A short run on every
+    # push catches regressions; the corpus is what makes it cumulative.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: taiki-e/install-action@cargo-fuzz
+      - uses: actions/cache@v4
+        with:
+          path: crates/kvlite-resp/fuzz/corpus
+          key: fuzz-corpus-${{ github.sha }}
+          restore-keys: fuzz-corpus-
+      - run: cargo fuzz run decode -- -max_total_time=60
+        working-directory: crates/kvlite-resp
+      - run: cargo fuzz run roundtrip -- -max_total_time=60
+        working-directory: crates/kvlite-resp
+
+  semver:
+    name: semver
+    # Only meaningful once something is published; until then there is no baseline
+    # to compare against, so this is allowed to be a no-op rather than a red X.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: obi1kenobi/cargo-semver-checks-action@v2
+
+  supply-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check advisories bans licenses sources

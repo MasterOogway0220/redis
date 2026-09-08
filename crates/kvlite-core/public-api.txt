@@ -1,0 +1,144 @@
+pub mod kvlite_core
+pub use kvlite_core::Keyspace
+pub use kvlite_core::KvClock
+pub use kvlite_core::KvError
+pub use kvlite_core::KvOptions
+pub use kvlite_core::KvResult
+pub use kvlite_core::KvValueType
+pub use kvlite_core::KvWriteCondition
+pub use kvlite_core::Store
+pub struct kvlite_core::KvKeyspace
+impl kvlite_core::KvKeyspace
+pub fn kvlite_core::KvKeyspace::append(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::clear(&self)
+pub fn kvlite_core::KvKeyspace::contains(&self, &[u8]) -> bool
+pub fn kvlite_core::KvKeyspace::expire(&self, &[u8], core::option::Option<core::time::Duration>) -> bool
+pub fn kvlite_core::KvKeyspace::get(&self, &[u8]) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::get_set(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::hash_contains(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<bool>
+pub fn kvlite_core::KvKeyspace::hash_entries(&self, &[u8]) -> kvlite_api::error::KvResult<alloc::vec::Vec<(alloc::vec::Vec<u8>, alloc::vec::Vec<u8>)>>
+pub fn kvlite_core::KvKeyspace::hash_get(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::hash_incr_by(&self, &[u8], &[u8], i64) -> kvlite_api::error::KvResult<i64>
+pub fn kvlite_core::KvKeyspace::hash_len(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::hash_remove(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<bool>
+pub fn kvlite_core::KvKeyspace::hash_set(&self, &[u8], &[u8], &[u8]) -> kvlite_api::error::KvResult<bool>
+pub fn kvlite_core::KvKeyspace::incr_by(&self, &[u8], i64) -> kvlite_api::error::KvResult<i64>
+pub fn kvlite_core::KvKeyspace::index(&self) -> usize
+pub fn kvlite_core::KvKeyspace::is_empty(&self) -> bool
+pub fn kvlite_core::KvKeyspace::keys(&self) -> alloc::vec::Vec<alloc::vec::Vec<u8>>
+pub fn kvlite_core::KvKeyspace::kind(&self, &[u8]) -> kvlite_api::value::KvValueType
+pub fn kvlite_core::KvKeyspace::len(&self) -> u64
+pub fn kvlite_core::KvKeyspace::list_index(&self, &[u8], i64) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::list_len(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::list_range(&self, &[u8], i64, i64) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::list_remove(&self, &[u8], i64, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::list_set(&self, &[u8], i64, &[u8]) -> kvlite_api::error::KvResult<bool>
+pub fn kvlite_core::KvKeyspace::list_trim(&self, &[u8], i64, i64) -> kvlite_api::error::KvResult<()>
+pub fn kvlite_core::KvKeyspace::pop_back(&self, &[u8]) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::pop_front(&self, &[u8]) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::push_back(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::push_front(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::remove(&self, &[u8]) -> bool
+pub fn kvlite_core::KvKeyspace::set(&self, &[u8], &[u8], core::option::Option<core::time::Duration>, kvlite_api::value::KvWriteCondition, bool) -> bool
+pub fn kvlite_core::KvKeyspace::set_add(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::set_contains(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<bool>
+pub fn kvlite_core::KvKeyspace::set_difference(&self, &[&[u8]]) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::set_difference_store(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::set_intersect(&self, &[&[u8]]) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::set_intersect_store(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::set_len(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::set_members(&self, &[u8]) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::set_move(&self, &[u8], &[u8], &[u8]) -> kvlite_api::error::KvResult<bool>
+pub fn kvlite_core::KvKeyspace::set_pop(&self, &[u8], usize) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::set_random_members(&self, &[u8], i64) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::set_remove(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::set_union(&self, &[&[u8]]) -> kvlite_api::error::KvResult<alloc::vec::Vec<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::set_union_store(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sorted_set_add(&self, &[u8], &[(f64, &[u8])], kvlite_api::value::KvWriteCondition, bool, bool) -> kvlite_api::error::KvResult<(u64, u64)>
+pub fn kvlite_core::KvKeyspace::sorted_set_count(&self, &[u8], core::ops::range::Bound<f64>, core::ops::range::Bound<f64>) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sorted_set_incr_by(&self, &[u8], &[u8], f64) -> kvlite_api::error::KvResult<f64>
+pub fn kvlite_core::KvKeyspace::sorted_set_len(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sorted_set_pop(&self, &[u8], usize, bool) -> kvlite_api::error::KvResult<alloc::vec::Vec<(alloc::vec::Vec<u8>, f64)>>
+pub fn kvlite_core::KvKeyspace::sorted_set_range(&self, &[u8], i64, i64, bool) -> kvlite_api::error::KvResult<alloc::vec::Vec<(alloc::vec::Vec<u8>, f64)>>
+pub fn kvlite_core::KvKeyspace::sorted_set_range_by_score(&self, &[u8], core::ops::range::Bound<f64>, core::ops::range::Bound<f64>, bool) -> kvlite_api::error::KvResult<alloc::vec::Vec<(alloc::vec::Vec<u8>, f64)>>
+pub fn kvlite_core::KvKeyspace::sorted_set_rank(&self, &[u8], &[u8], bool) -> kvlite_api::error::KvResult<core::option::Option<u64>>
+pub fn kvlite_core::KvKeyspace::sorted_set_remove(&self, &[u8], &[&[u8]]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sorted_set_remove_range_by_rank(&self, &[u8], i64, i64) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sorted_set_remove_range_by_score(&self, &[u8], core::ops::range::Bound<f64>, core::ops::range::Bound<f64>) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sorted_set_score(&self, &[u8], &[u8]) -> kvlite_api::error::KvResult<core::option::Option<f64>>
+pub fn kvlite_core::KvKeyspace::strlen(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::sweep_expired(&self, usize) -> usize
+pub fn kvlite_core::KvKeyspace::time_to_live(&self, &[u8]) -> core::option::Option<core::time::Duration>
+impl kvlite_api::store::Keyspace for kvlite_core::KvKeyspace
+pub fn kvlite_core::KvKeyspace::clear(&self)
+pub fn kvlite_core::KvKeyspace::contains(&self, &[u8]) -> bool
+pub fn kvlite_core::KvKeyspace::expire(&self, &[u8], core::option::Option<core::time::Duration>) -> bool
+pub fn kvlite_core::KvKeyspace::get(&self, &[u8]) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvKeyspace::incr_by(&self, &[u8], i64) -> kvlite_api::error::KvResult<i64>
+pub fn kvlite_core::KvKeyspace::index(&self) -> usize
+pub fn kvlite_core::KvKeyspace::kind(&self, &[u8]) -> kvlite_api::value::KvValueType
+pub fn kvlite_core::KvKeyspace::len(&self) -> u64
+pub fn kvlite_core::KvKeyspace::remove(&self, &[u8]) -> bool
+pub fn kvlite_core::KvKeyspace::set(&self, &[u8], &[u8], core::option::Option<core::time::Duration>, kvlite_api::value::KvWriteCondition, bool) -> bool
+pub fn kvlite_core::KvKeyspace::strlen(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
+pub fn kvlite_core::KvKeyspace::time_to_live(&self, &[u8]) -> core::option::Option<core::time::Duration>
+impl !core::marker::Freeze for kvlite_core::KvKeyspace
+impl core::marker::Send for kvlite_core::KvKeyspace
+impl core::marker::Sync for kvlite_core::KvKeyspace
+impl core::marker::Unpin for kvlite_core::KvKeyspace
+impl core::marker::UnsafeUnpin for kvlite_core::KvKeyspace
+impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_core::KvKeyspace
+impl !core::panic::unwind_safe::UnwindSafe for kvlite_core::KvKeyspace
+pub struct kvlite_core::KvStore
+impl kvlite_core::KvStore
+pub fn kvlite_core::KvStore::clear(&self)
+pub fn kvlite_core::KvStore::clock(&self) -> &alloc::sync::Arc<dyn kvlite_api::clock::KvClock>
+pub fn kvlite_core::KvStore::contains(&self, impl core::convert::AsRef<[u8]>) -> bool
+pub fn kvlite_core::KvStore::default_keyspace(&self) -> &kvlite_core::KvKeyspace
+pub fn kvlite_core::KvStore::expire(&self, impl core::convert::AsRef<[u8]>, core::option::Option<core::time::Duration>) -> bool
+pub fn kvlite_core::KvStore::get(&self, impl core::convert::AsRef<[u8]>) -> kvlite_api::error::KvResult<core::option::Option<alloc::vec::Vec<u8>>>
+pub fn kvlite_core::KvStore::get_str(&self, impl core::convert::AsRef<[u8]>) -> kvlite_api::error::KvResult<core::option::Option<alloc::string::String>>
+pub fn kvlite_core::KvStore::incr_by(&self, impl core::convert::AsRef<[u8]>, i64) -> kvlite_api::error::KvResult<i64>
+pub fn kvlite_core::KvStore::keyspace(&self, usize) -> core::option::Option<&kvlite_core::KvKeyspace>
+pub fn kvlite_core::KvStore::keyspace_count(&self) -> usize
+pub fn kvlite_core::KvStore::new() -> Self
+pub fn kvlite_core::KvStore::remove(&self, impl core::convert::AsRef<[u8]>) -> bool
+pub fn kvlite_core::KvStore::set(&self, impl core::convert::AsRef<[u8]>, impl core::convert::AsRef<[u8]>, core::option::Option<core::time::Duration>) -> bool
+pub fn kvlite_core::KvStore::sweep_expired(&self, usize) -> usize
+pub fn kvlite_core::KvStore::time_to_live(&self, impl core::convert::AsRef<[u8]>) -> core::option::Option<core::time::Duration>
+pub fn kvlite_core::KvStore::with_options(kvlite_api::options::KvOptions) -> Self
+impl core::default::Default for kvlite_core::KvStore
+pub fn kvlite_core::KvStore::default() -> Self
+impl core::fmt::Debug for kvlite_core::KvStore
+pub fn kvlite_core::KvStore::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl kvlite_api::store::Store for kvlite_core::KvStore
+pub fn kvlite_core::KvStore::keyspace(&self, usize) -> core::option::Option<&dyn kvlite_api::store::Keyspace>
+pub fn kvlite_core::KvStore::keyspace_count(&self) -> usize
+impl core::marker::Freeze for kvlite_core::KvStore
+impl core::marker::Send for kvlite_core::KvStore
+impl core::marker::Sync for kvlite_core::KvStore
+impl core::marker::Unpin for kvlite_core::KvStore
+impl core::marker::UnsafeUnpin for kvlite_core::KvStore
+impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_core::KvStore
+impl !core::panic::unwind_safe::UnwindSafe for kvlite_core::KvStore
+pub struct kvlite_core::SystemClock
+impl core::clone::Clone for kvlite_core::SystemClock
+pub fn kvlite_core::SystemClock::clone(&self) -> kvlite_core::SystemClock
+impl core::default::Default for kvlite_core::SystemClock
+pub fn kvlite_core::SystemClock::default() -> kvlite_core::SystemClock
+impl core::fmt::Debug for kvlite_core::SystemClock
+pub fn kvlite_core::SystemClock::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Copy for kvlite_core::SystemClock
+impl kvlite_api::clock::KvClock for kvlite_core::SystemClock
+pub fn kvlite_core::SystemClock::now_millis(&self) -> u64
+impl core::marker::Freeze for kvlite_core::SystemClock
+impl core::marker::Send for kvlite_core::SystemClock
+impl core::marker::Sync for kvlite_core::SystemClock
+impl core::marker::Unpin for kvlite_core::SystemClock
+impl core::marker::UnsafeUnpin for kvlite_core::SystemClock
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_core::SystemClock
+impl core::panic::unwind_safe::UnwindSafe for kvlite_core::SystemClock
+pub fn kvlite_core::format_int(i64) -> alloc::vec::Vec<u8>
+pub fn kvlite_core::format_score(f64) -> alloc::vec::Vec<u8>
+pub fn kvlite_core::parse_int(&[u8]) -> core::option::Option<i64>
+pub fn kvlite_core::parse_score(&[u8]) -> core::option::Option<f64>

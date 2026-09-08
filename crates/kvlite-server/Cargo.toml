@@ -1,0 +1,26 @@
+[package]
+name = "kvlite-server"
+description = "A Redis-compatible server over the Kvlite engine: TCP listener, RESP2/RESP3 sessions, keyspaces and pub/sub."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+
+[dependencies]
+kvlite-api.workspace = true
+kvlite-core.workspace = true
+kvlite-resp.workspace = true
+# The only third-party dependency in the whole workspace, and it stops here:
+# nothing below this layer knows what an async runtime is.
+tokio = { workspace = true, features = ["rt", "net", "io-util", "sync", "time", "macros"] }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "time"] }
+
+[lints]
+workspace = true

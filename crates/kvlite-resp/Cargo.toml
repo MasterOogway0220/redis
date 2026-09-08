@@ -1,0 +1,18 @@
+[package]
+name = "kvlite-resp"
+description = "A sans-io RESP2/RESP3 decoder and encoder. No async runtime, no socket, no dependencies outside core/alloc. Build a Redis proxy, sniffer, mock or client on it."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+
+# Sans-io. No runtime here, not even optional. See kvlite-packaging.md section 3.
+[dependencies]
+
+[lints]
+workspace = true

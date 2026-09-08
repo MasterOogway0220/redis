@@ -1,0 +1,27 @@
+[package]
+name = "kvlite-testing"
+description = "A Redis substitute for your integration tests: in-process, ephemeral port, sub-50ms start, controllable clock, no Docker and no test-framework dependency."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+
+[dependencies]
+kvlite-api.workspace = true
+kvlite-core.workspace = true
+kvlite-server.workspace = true
+# The fixture runs the server on a runtime of its own, so a blocking Redis client
+# in a single-threaded async test cannot deadlock against it.
+tokio = { workspace = true, features = ["rt", "rt-multi-thread"] }
+
+[dev-dependencies]
+kvlite-resp.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "time", "net", "io-util"] }
+
+[lints]
+workspace = true

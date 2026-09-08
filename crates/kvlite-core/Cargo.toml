@@ -1,0 +1,20 @@
+[package]
+name = "kvlite-core"
+description = "The Kvlite engine: Redis data-type and expiry semantics, in-process. No I/O, no network, no async runtime, and no dependencies outside std."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+
+# Rule 1. `kvlite-api` is the only line that may ever appear here, and it is
+# itself dependency-free. Enforced by `cargo xtask check-layering`.
+[dependencies]
+kvlite-api.workspace = true
+
+[lints]
+workspace = true

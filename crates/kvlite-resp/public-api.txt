@@ -1,0 +1,165 @@
+pub mod kvlite_resp
+#[non_exhaustive] pub enum kvlite_resp::DecodeError
+pub kvlite_resp::DecodeError::ArrayTooLong
+pub kvlite_resp::DecodeError::BulkTooLong
+pub kvlite_resp::DecodeError::DepthExceeded
+pub kvlite_resp::DecodeError::InvalidBoolean
+pub kvlite_resp::DecodeError::InvalidDouble
+pub kvlite_resp::DecodeError::InvalidInteger
+pub kvlite_resp::DecodeError::InvalidLength
+pub kvlite_resp::DecodeError::InvalidVerbatim
+pub kvlite_resp::DecodeError::LineTooLong
+pub kvlite_resp::DecodeError::MissingTerminator
+pub kvlite_resp::DecodeError::NotACommand
+pub kvlite_resp::DecodeError::StrayLineBreak
+pub kvlite_resp::DecodeError::StreamedNotSupported
+pub kvlite_resp::DecodeError::UnexpectedByte(u8)
+impl core::clone::Clone for kvlite_resp::DecodeError
+pub fn kvlite_resp::DecodeError::clone(&self) -> kvlite_resp::DecodeError
+impl core::cmp::Eq for kvlite_resp::DecodeError
+impl core::cmp::PartialEq for kvlite_resp::DecodeError
+pub fn kvlite_resp::DecodeError::eq(&self, &kvlite_resp::DecodeError) -> bool
+impl core::error::Error for kvlite_resp::DecodeError
+impl core::fmt::Debug for kvlite_resp::DecodeError
+pub fn kvlite_resp::DecodeError::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::fmt::Display for kvlite_resp::DecodeError
+pub fn kvlite_resp::DecodeError::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::hash::Hash for kvlite_resp::DecodeError
+pub fn kvlite_resp::DecodeError::hash<__H: core::hash::Hasher>(&self, &mut __H)
+impl core::marker::Copy for kvlite_resp::DecodeError
+impl core::marker::StructuralPartialEq for kvlite_resp::DecodeError
+impl core::marker::Freeze for kvlite_resp::DecodeError
+impl core::marker::Send for kvlite_resp::DecodeError
+impl core::marker::Sync for kvlite_resp::DecodeError
+impl core::marker::Unpin for kvlite_resp::DecodeError
+impl core::marker::UnsafeUnpin for kvlite_resp::DecodeError
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_resp::DecodeError
+impl core::panic::unwind_safe::UnwindSafe for kvlite_resp::DecodeError
+#[non_exhaustive] pub enum kvlite_resp::Frame
+pub kvlite_resp::Frame::Array(alloc::vec::Vec<kvlite_resp::Frame>)
+pub kvlite_resp::Frame::BigNumber(alloc::vec::Vec<u8>)
+pub kvlite_resp::Frame::Boolean(bool)
+pub kvlite_resp::Frame::Bulk(alloc::vec::Vec<u8>)
+pub kvlite_resp::Frame::Double(f64)
+pub kvlite_resp::Frame::Error(alloc::vec::Vec<u8>)
+pub kvlite_resp::Frame::Integer(i64)
+pub kvlite_resp::Frame::Map(alloc::vec::Vec<(kvlite_resp::Frame, kvlite_resp::Frame)>)
+pub kvlite_resp::Frame::Null
+pub kvlite_resp::Frame::Push(alloc::vec::Vec<kvlite_resp::Frame>)
+pub kvlite_resp::Frame::Set(alloc::vec::Vec<kvlite_resp::Frame>)
+pub kvlite_resp::Frame::Simple(alloc::vec::Vec<u8>)
+pub kvlite_resp::Frame::Verbatim
+pub kvlite_resp::Frame::Verbatim::data: alloc::vec::Vec<u8>
+pub kvlite_resp::Frame::Verbatim::format: [u8; 3]
+impl kvlite_resp::Frame
+pub fn kvlite_resp::Frame::as_bytes(&self) -> core::option::Option<&[u8]>
+pub fn kvlite_resp::Frame::as_str(&self) -> core::option::Option<&str>
+pub fn kvlite_resp::Frame::bulk(impl core::convert::AsRef<[u8]>) -> Self
+pub fn kvlite_resp::Frame::error(impl core::convert::AsRef<[u8]>) -> Self
+pub fn kvlite_resp::Frame::is_null(&self) -> bool
+pub fn kvlite_resp::Frame::ok() -> Self
+pub fn kvlite_resp::Frame::simple(impl core::convert::AsRef<[u8]>) -> Self
+pub fn kvlite_resp::Frame::to_string_lossy(&self) -> core::option::Option<alloc::string::String>
+impl core::clone::Clone for kvlite_resp::Frame
+pub fn kvlite_resp::Frame::clone(&self) -> kvlite_resp::Frame
+impl core::cmp::PartialEq for kvlite_resp::Frame
+pub fn kvlite_resp::Frame::eq(&self, &kvlite_resp::Frame) -> bool
+impl core::fmt::Debug for kvlite_resp::Frame
+pub fn kvlite_resp::Frame::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::StructuralPartialEq for kvlite_resp::Frame
+impl core::marker::Freeze for kvlite_resp::Frame
+impl core::marker::Send for kvlite_resp::Frame
+impl core::marker::Sync for kvlite_resp::Frame
+impl core::marker::Unpin for kvlite_resp::Frame
+impl core::marker::UnsafeUnpin for kvlite_resp::Frame
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_resp::Frame
+impl core::panic::unwind_safe::UnwindSafe for kvlite_resp::Frame
+#[non_exhaustive] pub enum kvlite_resp::RespProtocol
+pub kvlite_resp::RespProtocol::Resp2
+pub kvlite_resp::RespProtocol::Resp3
+impl kvlite_resp::RespProtocol
+pub const fn kvlite_resp::RespProtocol::from_version(u8) -> core::option::Option<Self>
+pub const fn kvlite_resp::RespProtocol::version(self) -> u8
+impl core::clone::Clone for kvlite_resp::RespProtocol
+pub fn kvlite_resp::RespProtocol::clone(&self) -> kvlite_resp::RespProtocol
+impl core::cmp::Eq for kvlite_resp::RespProtocol
+impl core::cmp::PartialEq for kvlite_resp::RespProtocol
+pub fn kvlite_resp::RespProtocol::eq(&self, &kvlite_resp::RespProtocol) -> bool
+impl core::default::Default for kvlite_resp::RespProtocol
+pub fn kvlite_resp::RespProtocol::default() -> kvlite_resp::RespProtocol
+impl core::fmt::Debug for kvlite_resp::RespProtocol
+pub fn kvlite_resp::RespProtocol::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::hash::Hash for kvlite_resp::RespProtocol
+pub fn kvlite_resp::RespProtocol::hash<__H: core::hash::Hasher>(&self, &mut __H)
+impl core::marker::Copy for kvlite_resp::RespProtocol
+impl core::marker::StructuralPartialEq for kvlite_resp::RespProtocol
+impl core::marker::Freeze for kvlite_resp::RespProtocol
+impl core::marker::Send for kvlite_resp::RespProtocol
+impl core::marker::Sync for kvlite_resp::RespProtocol
+impl core::marker::Unpin for kvlite_resp::RespProtocol
+impl core::marker::UnsafeUnpin for kvlite_resp::RespProtocol
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_resp::RespProtocol
+impl core::panic::unwind_safe::UnwindSafe for kvlite_resp::RespProtocol
+pub struct kvlite_resp::Decoder
+impl kvlite_resp::Decoder
+pub fn kvlite_resp::Decoder::decode(&self, &[u8]) -> core::result::Result<core::option::Option<(kvlite_resp::Frame, usize)>, kvlite_resp::DecodeError>
+pub fn kvlite_resp::Decoder::decode_command(&self, &[u8]) -> kvlite_resp::DecodedCommand
+pub fn kvlite_resp::Decoder::limits(&self) -> &kvlite_resp::Limits
+pub fn kvlite_resp::Decoder::new() -> Self
+pub fn kvlite_resp::Decoder::with_limits(kvlite_resp::Limits) -> Self
+impl core::clone::Clone for kvlite_resp::Decoder
+pub fn kvlite_resp::Decoder::clone(&self) -> kvlite_resp::Decoder
+impl core::default::Default for kvlite_resp::Decoder
+pub fn kvlite_resp::Decoder::default() -> kvlite_resp::Decoder
+impl core::fmt::Debug for kvlite_resp::Decoder
+pub fn kvlite_resp::Decoder::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Freeze for kvlite_resp::Decoder
+impl core::marker::Send for kvlite_resp::Decoder
+impl core::marker::Sync for kvlite_resp::Decoder
+impl core::marker::Unpin for kvlite_resp::Decoder
+impl core::marker::UnsafeUnpin for kvlite_resp::Decoder
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_resp::Decoder
+impl core::panic::unwind_safe::UnwindSafe for kvlite_resp::Decoder
+pub struct kvlite_resp::Encoder
+impl kvlite_resp::Encoder
+pub fn kvlite_resp::Encoder::encode(&self, &kvlite_resp::Frame, &mut alloc::vec::Vec<u8>)
+pub const fn kvlite_resp::Encoder::new(kvlite_resp::RespProtocol) -> Self
+pub const fn kvlite_resp::Encoder::protocol(self) -> kvlite_resp::RespProtocol
+impl core::clone::Clone for kvlite_resp::Encoder
+pub fn kvlite_resp::Encoder::clone(&self) -> kvlite_resp::Encoder
+impl core::default::Default for kvlite_resp::Encoder
+pub fn kvlite_resp::Encoder::default() -> kvlite_resp::Encoder
+impl core::fmt::Debug for kvlite_resp::Encoder
+pub fn kvlite_resp::Encoder::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Copy for kvlite_resp::Encoder
+impl core::marker::Freeze for kvlite_resp::Encoder
+impl core::marker::Send for kvlite_resp::Encoder
+impl core::marker::Sync for kvlite_resp::Encoder
+impl core::marker::Unpin for kvlite_resp::Encoder
+impl core::marker::UnsafeUnpin for kvlite_resp::Encoder
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_resp::Encoder
+impl core::panic::unwind_safe::UnwindSafe for kvlite_resp::Encoder
+#[non_exhaustive] pub struct kvlite_resp::Limits
+pub kvlite_resp::Limits::max_array_len: usize
+pub kvlite_resp::Limits::max_bulk_len: usize
+pub kvlite_resp::Limits::max_depth: usize
+pub kvlite_resp::Limits::max_line_len: usize
+impl core::clone::Clone for kvlite_resp::Limits
+pub fn kvlite_resp::Limits::clone(&self) -> kvlite_resp::Limits
+impl core::cmp::Eq for kvlite_resp::Limits
+impl core::cmp::PartialEq for kvlite_resp::Limits
+pub fn kvlite_resp::Limits::eq(&self, &kvlite_resp::Limits) -> bool
+impl core::default::Default for kvlite_resp::Limits
+pub fn kvlite_resp::Limits::default() -> Self
+impl core::fmt::Debug for kvlite_resp::Limits
+pub fn kvlite_resp::Limits::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Copy for kvlite_resp::Limits
+impl core::marker::StructuralPartialEq for kvlite_resp::Limits
+impl core::marker::Freeze for kvlite_resp::Limits
+impl core::marker::Send for kvlite_resp::Limits
+impl core::marker::Sync for kvlite_resp::Limits
+impl core::marker::Unpin for kvlite_resp::Limits
+impl core::marker::UnsafeUnpin for kvlite_resp::Limits
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_resp::Limits
+impl core::panic::unwind_safe::UnwindSafe for kvlite_resp::Limits
+pub type kvlite_resp::DecodedCommand = core::result::Result<core::option::Option<(alloc::vec::Vec<alloc::vec::Vec<u8>>, usize)>, kvlite_resp::DecodeError>

@@ -1,0 +1,24 @@
+# Supply-chain policy. A second, independent enforcement point for the dependency
+# rules in kvlite-packaging.md section 4 — cargo-deny checks the resolved graph the
+# same way `cargo xtask check-layering` does, but for licences and advisories too.
+
+[advisories]
+yanked = "deny"
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+
+# Nothing that reaches an async runtime belongs below kvlite-server. This is a
+# blunter instrument than the xtask check and catches the same class of mistake
+# from a different angle.
+[[bans.deny]]
+name = "tokio"
+wrappers = ["kvlite-server", "kvlite-testing", "kvlite"]
+
+[licenses]
+allow = ["MIT", "Apache-2.0", "Unicode-3.0", "BSD-2-Clause", "BSD-3-Clause", "ISC"]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

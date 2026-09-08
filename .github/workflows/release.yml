@@ -1,0 +1,89 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish:
+    name: publish to crates.io
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+
+      # Dependency order matters: a crate cannot be published before the crates it
+      # depends on are on the registry. The `--locked` build is what makes the
+      # published artifact reproducible.
+      - name: Publish in dependency order
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          set -euo pipefail
+          for crate in kvlite-api kvlite-resp kvlite-core kvlite-server kvlite-testing kvlite; do
+            echo "publishing $crate"
+            cargo publish --package "$crate" --locked
+            # crates.io needs a moment before a new version is resolvable by the next
+            # crate in the chain.
+            cargo publish --package "$crate" --dry-run --locked || sleep 30
+          done
+
+  binaries:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-musl }
+          - { os: macos-latest, target: aarch64-apple-darwin }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: taiki-e/install-action@cross
+
+      # panic=abort belongs here rather than in [profile.release]: cargo profiles are
+      # workspace-scoped, and setting it there would break `cargo test --release`.
+      # --remap-path-prefix keeps a builder's directory layout out of backtraces.
+      - name: Build
+        run: cross build --release --locked --package kvlite --target ${{ matrix.target }}
+        env:
+          RUSTFLAGS: -C panic=abort --remap-path-prefix=${{ github.workspace }}=/kvlite
+
+      - name: Attest provenance
+        # crates.io cannot sign packages. This is what we can attest instead, and the
+        # release notes say so plainly rather than implying the crates are signed.
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: target/${{ matrix.target }}/release/kvlite*
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: target/${{ matrix.target }}/release/kvlite*
+          fail_on_unmatched_files: false
+
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-cyclonedx
+      - run: cargo cyclonedx --format json --all
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: "**/*.cdx.json"

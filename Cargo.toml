@@ -1,0 +1,41 @@
+[workspace]
+resolver = "3"
+members = ["crates/kvlite-api", "crates/kvlite-resp", "crates/kvlite-core", "crates/kvlite-server", "crates/kvlite-testing", "crates/kvlite", "xtask"]
+
+# Phase 2 and Phase 4-5 crates (kvlite-persistence, kvlite-cluster, kvlite-client)
+# are deliberately absent. See kvlite-packaging.md section 12: no speculative surface.
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+repository = "https://github.com/kvlite/kvlite"
+authors = ["Kvlite contributors"]
+keywords = ["redis", "cache", "key-value", "resp"]
+categories = ["caching", "database-implementations"]
+
+[workspace.dependencies]
+# Internal crates. Every path dependency carries a version, or `cargo publish`
+# rejects it and Rule 3 fails. See kvlite-packaging.md section 4.
+kvlite-api = { path = "crates/kvlite-api", version = "0.1.0" }
+kvlite-resp = { path = "crates/kvlite-resp", version = "0.1.0" }
+kvlite-core = { path = "crates/kvlite-core", version = "0.1.0" }
+kvlite-server = { path = "crates/kvlite-server", version = "0.1.0" }
+
+# Third-party. Nothing here may reach kvlite-api, kvlite-resp or kvlite-core.
+tokio = { version = "1", default-features = false }
+
+[workspace.lints.rust]
+missing_docs = "warn"
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+# panic = "abort" is set on the binary only, never here: setting it on a workspace
+# profile poisons every consumer that builds us as a dependency.
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = "symbols"

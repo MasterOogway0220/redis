@@ -1,0 +1,15 @@
+[package]
+name = "xtask"
+description = "Repository checks. Not published."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+# No dependencies, including here. `cargo metadata` speaks JSON, but `cargo tree`
+# speaks lines, and lines need no parser. A checker that pulls in serde to enforce
+# a no-dependencies rule would be a poor advertisement for it.
+[dependencies]
+
+[lints]
+workspace = true

@@ -1,0 +1,37 @@
+pub mod kvlite_server
+pub struct kvlite_server::Server
+impl kvlite_server::Server
+pub async fn kvlite_server::Server::bind(kvlite_server::ServerConfig) -> core::io::error::Result<Self>
+pub async fn kvlite_server::Server::bind_with_store(kvlite_server::ServerConfig, alloc::sync::Arc<kvlite_core::store::KvStore>) -> core::io::error::Result<Self>
+pub fn kvlite_server::Server::local_addr(&self) -> core::net::socket_addr::SocketAddr
+pub async fn kvlite_server::Server::shutdown(self)
+pub fn kvlite_server::Server::store(&self) -> &alloc::sync::Arc<kvlite_core::store::KvStore>
+pub fn kvlite_server::Server::url(&self) -> alloc::string::String
+impl core::fmt::Debug for kvlite_server::Server
+pub fn kvlite_server::Server::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::ops::drop::Drop for kvlite_server::Server
+pub fn kvlite_server::Server::drop(&mut self)
+impl core::marker::Freeze for kvlite_server::Server
+impl core::marker::Send for kvlite_server::Server
+impl core::marker::Sync for kvlite_server::Server
+impl core::marker::Unpin for kvlite_server::Server
+impl core::marker::UnsafeUnpin for kvlite_server::Server
+impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_server::Server
+impl !core::panic::unwind_safe::UnwindSafe for kvlite_server::Server
+#[non_exhaustive] pub struct kvlite_server::ServerConfig
+pub kvlite_server::ServerConfig::bind: core::net::socket_addr::SocketAddr
+pub kvlite_server::ServerConfig::expiry_sample_size: usize
+pub kvlite_server::ServerConfig::expiry_sweep_interval: core::option::Option<core::time::Duration>
+impl core::clone::Clone for kvlite_server::ServerConfig
+pub fn kvlite_server::ServerConfig::clone(&self) -> kvlite_server::ServerConfig
+impl core::default::Default for kvlite_server::ServerConfig
+pub fn kvlite_server::ServerConfig::default() -> Self
+impl core::fmt::Debug for kvlite_server::ServerConfig
+pub fn kvlite_server::ServerConfig::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Freeze for kvlite_server::ServerConfig
+impl core::marker::Send for kvlite_server::ServerConfig
+impl core::marker::Sync for kvlite_server::ServerConfig
+impl core::marker::Unpin for kvlite_server::ServerConfig
+impl core::marker::UnsafeUnpin for kvlite_server::ServerConfig
+impl core::panic::unwind_safe::RefUnwindSafe for kvlite_server::ServerConfig
+impl core::panic::unwind_safe::UnwindSafe for kvlite_server::ServerConfig

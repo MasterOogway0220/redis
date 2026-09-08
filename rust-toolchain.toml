@@ -1,0 +1,5 @@
+[toolchain]
+# Development uses stable. Release builds pin an exact version in the release
+# workflow so the shipped binary is reproducible (packaging spec section 11).
+channel = "stable"
+components = ["rustfmt", "clippy"]

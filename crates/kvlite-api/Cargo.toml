@@ -1,0 +1,18 @@
+[package]
+name = "kvlite-api"
+description = "Traits and option types for Kvlite. Contracts only — no engine, no server, no dependencies outside core/alloc."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "README.md"
+
+# Rule 1 territory. This table stays empty. Forever.
+[dependencies]
+
+[lints]
+workspace = true

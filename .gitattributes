@@ -1,0 +1,3 @@
+# Normalise to LF in the repository. Without this, committing from Windows stores
+# CRLF and `cargo fmt --check` disagrees with itself across platforms in CI.
+* text=auto eol=lf
