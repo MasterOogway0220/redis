@@ -1,5 +1,8 @@
 name: Release
 
+# Runs on tags only. Unlike ci.yml this cannot be rehearsed locally end to end, so
+# treat the first tag as a dry run and expect to fix something.
+
 on:
   push:
     tags: ["v*"]
@@ -13,68 +16,93 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  # Nothing ships unless the same checks that gate a pull request also pass here.
+  verify:
+    uses: ./.github/workflows/ci.yml
+
   publish:
     name: publish to crates.io
+    needs: verify
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
 
       # Dependency order matters: a crate cannot be published before the crates it
-      # depends on are on the registry. The `--locked` build is what makes the
-      # published artifact reproducible.
+      # depends on are on the registry. `--locked` is what makes the published
+      # artifact reproducible.
       - name: Publish in dependency order
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: |
           set -euo pipefail
           for crate in kvlite-api kvlite-resp kvlite-core kvlite-server kvlite-testing kvlite; do
-            echo "publishing $crate"
+            echo "::group::publishing $crate"
             cargo publish --package "$crate" --locked
-            # crates.io needs a moment before a new version is resolvable by the next
-            # crate in the chain.
-            cargo publish --package "$crate" --dry-run --locked || sleep 30
+            # The index takes a moment to catch up, and the next crate in the chain
+            # cannot resolve this one until it has.
+            sleep 30
+            echo "::endgroup::"
           done
 
   binaries:
     name: ${{ matrix.target }}
+    needs: verify
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl }
-          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-musl }
-          - { os: macos-latest, target: aarch64-apple-darwin }
-          - { os: windows-latest, target: x86_64-pc-windows-msvc }
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl, cross: true }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-musl, cross: true }
+          - { os: macos-latest, target: aarch64-apple-darwin, cross: false }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc, cross: false }
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
-      - uses: taiki-e/install-action@cross
+
+      # musl needs a linker the runner does not ship. The Apple and Windows targets
+      # are native to their runners and need nothing — `cross` would be actively
+      # wrong there, since it builds through a Linux container.
+      - name: Install musl toolchain
+        if: matrix.cross
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
 
       # panic=abort belongs here rather than in [profile.release]: cargo profiles are
       # workspace-scoped, and setting it there would break `cargo test --release`.
       # --remap-path-prefix keeps a builder's directory layout out of backtraces.
       - name: Build
-        run: cross build --release --locked --package kvlite --target ${{ matrix.target }}
+        shell: bash
+        run: cargo build --release --locked --package kvlite --target ${{ matrix.target }}
         env:
           RUSTFLAGS: -C panic=abort --remap-path-prefix=${{ github.workspace }}=/kvlite
+
+      - name: Stage artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          suffix=""
+          [ "${{ runner.os }}" = "Windows" ] && suffix=".exe"
+          cp "target/${{ matrix.target }}/release/kvlite$suffix" \
+             "dist/kvlite-${{ matrix.target }}$suffix"
+          ls -l dist
 
       - name: Attest provenance
         # crates.io cannot sign packages. This is what we can attest instead, and the
         # release notes say so plainly rather than implying the crates are signed.
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: target/${{ matrix.target }}/release/kvlite*
+          subject-path: dist/*
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: target/${{ matrix.target }}/release/kvlite*
-          fail_on_unmatched_files: false
+          files: dist/*
 
   sbom:
+    needs: verify
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

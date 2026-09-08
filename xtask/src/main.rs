@@ -59,6 +59,18 @@ const TOKIO_TREE: &[&str] = &[
 /// Crates that must build without `std`, because other people build against them.
 const NO_STD: &[&str] = &["kvlite-api", "kvlite-resp"];
 
+/// Crates whose public surface is tracked in `public-api.txt` (packaging spec §5).
+const TRACKED_API: &[&str] =
+    &["kvlite-api", "kvlite-resp", "kvlite-core", "kvlite-server", "kvlite-testing"];
+
+/// What `cargo public-api` is told to leave out.
+///
+/// Auto-trait, blanket and derived impls are produced by the compiler, so they move
+/// when the toolchain moves rather than when our API does. Tracking them would turn
+/// a rustc release into a red build with no cause in this repository — and this runs
+/// on nightly, which moves daily.
+const API_OMIT: &str = "blanket-impls,auto-trait-impls,auto-derived-impls";
+
 fn main() -> ExitCode {
     let checks: Vec<String> = std::env::args().skip(1).collect();
     let requested: Vec<&str> = checks.iter().map(String::as_str).collect();
@@ -68,9 +80,12 @@ fn main() -> ExitCode {
         ["check-layering"] => check_layering(),
         ["check-no-std"] => check_no_std(),
         ["check-isolated"] => check_isolated(),
+        ["public-api"] => regenerate_public_api(),
         [other, ..] => {
             eprintln!("unknown check: {other}");
-            eprintln!("usage: cargo xtask [all|check-layering|check-no-std|check-isolated]");
+            eprintln!(
+                "usage: cargo xtask [all|check-layering|check-no-std|check-isolated|public-api]"
+            );
             return ExitCode::FAILURE;
         }
     };
@@ -230,6 +245,49 @@ fn check_isolated() -> usize {
 
 fn indent(text: &str) -> String {
     text.lines().map(|line| format!("       {line}\n")).collect()
+}
+
+// ---- the public API snapshots (packaging spec section 5) ------------------
+
+/// Rewrites every `public-api.txt` with exactly the flags CI compares against.
+///
+/// CI diffs its own regeneration against these files, so the flags have to match.
+/// Keeping them here rather than in the workflow means there is one place to change
+/// them, and no way for the two to drift apart.
+fn regenerate_public_api() -> usize {
+    println!("== regenerating public API snapshots (packaging spec section 5) ==");
+    let mut failures = 0;
+
+    for krate in TRACKED_API {
+        let path = format!("crates/{krate}/public-api.txt");
+
+        let output = Command::new(cargo())
+            .args(["public-api", "--package", krate, "--omit", API_OMIT])
+            .output();
+
+        match output {
+            Ok(output) if output.status.success() => {
+                if let Err(err) = std::fs::write(&path, &output.stdout) {
+                    eprintln!("  FAIL {krate}: could not write {path}: {err}");
+                    failures += 1;
+                    continue;
+                }
+                let lines = output.stdout.iter().filter(|byte| **byte == b'\n').count();
+                println!("  ok   {path} ({lines} items)");
+            }
+            Ok(output) => {
+                eprintln!("  FAIL {krate}: cargo public-api failed");
+                eprintln!("{}", indent(&String::from_utf8_lossy(&output.stderr)));
+                failures += 1;
+            }
+            Err(_) => {
+                eprintln!("  FAIL {krate}: cargo-public-api is not installed");
+                eprintln!("       cargo install cargo-public-api --locked");
+                failures += 1;
+            }
+        }
+    }
+    failures
 }
 
 fn cargo() -> String {

@@ -1,0 +1,55 @@
+name: Fuzz
+
+# The decoder reads bytes straight off the network, which makes it the most
+# security-sensitive component in the project. It is fuzzed on a schedule rather
+# than on every push: a sixty-second run per commit finds almost nothing, while a
+# nightly run that keeps its corpus finds things worth finding.
+#
+# The invariants the fuzzer checks are also pinned as ordinary unit tests in
+# kvlite-resp, so an obvious regression fails the main workflow immediately.
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      seconds:
+        description: Seconds to run each target
+        required: false
+        default: "300"
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [decode, roundtrip]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: taiki-e/install-action@cargo-fuzz
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Restore corpus
+        uses: actions/cache@v4
+        with:
+          path: crates/kvlite-resp/fuzz/corpus/${{ matrix.target }}
+          key: fuzz-${{ matrix.target }}-${{ github.run_id }}
+          restore-keys: fuzz-${{ matrix.target }}-
+
+      - name: Fuzz
+        working-directory: crates/kvlite-resp
+        # cargo-fuzz sets its own codegen flags; the workflow-wide `-D warnings`
+        # from ci.yml has no business here and libfuzzer's own build would trip
+        # over it.
+        env:
+          RUSTFLAGS: ""
+        run: cargo fuzz run ${{ matrix.target }} -- -max_total_time=${{ inputs.seconds || 300 }}
+
+      - name: Upload any crash found
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-artifacts-${{ matrix.target }}
+          path: crates/kvlite-resp/fuzz/artifacts/

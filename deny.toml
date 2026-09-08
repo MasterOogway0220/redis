@@ -1,6 +1,7 @@
 # Supply-chain policy. A second, independent enforcement point for the dependency
-# rules in kvlite-packaging.md section 4 — cargo-deny checks the resolved graph the
-# same way `cargo xtask check-layering` does, but for licences and advisories too.
+# rules in kvlite-packaging.md section 4 — cargo-deny walks the resolved graph the
+# same way `cargo xtask check-layering` does, and additionally covers advisories,
+# licences and sources.
 
 [advisories]
 yanked = "deny"
@@ -11,13 +12,22 @@ wildcards = "deny"
 
 # Nothing that reaches an async runtime belongs below kvlite-server. This is a
 # blunter instrument than the xtask check and catches the same class of mistake
-# from a different angle.
+# from a different angle: tokio may only be depended on by these three crates.
 [[bans.deny]]
 name = "tokio"
 wrappers = ["kvlite-server", "kvlite-testing", "kvlite"]
 
 [licenses]
-allow = ["MIT", "Apache-2.0", "Unicode-3.0", "BSD-2-Clause", "BSD-3-Clause", "ISC"]
+# Exactly the licences the current graph actually uses. Deliberately not padded
+# with plausible extras: an unmatched entry is only a warning, but a short list
+# means adding a dependency under a new licence is a decision somebody makes on
+# purpose, in a diff, rather than something that slips through a wide allowance.
+allow = ["MIT", "Apache-2.0", "Unicode-3.0"]
+
+# `xtask` is publish = false and carries no licence field, because it is tooling
+# rather than a product crate. Without this it is reported as unlicensed and fails
+# the run.
+private = { ignore = true }
 
 [sources]
 unknown-registry = "deny"

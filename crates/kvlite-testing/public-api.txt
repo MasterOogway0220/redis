@@ -8,17 +8,8 @@ pub fn kvlite_testing::ManualClock::set(&self, u64)
 pub fn kvlite_testing::ManualClock::starting_at(u64) -> Self
 impl core::default::Default for kvlite_testing::ManualClock
 pub fn kvlite_testing::ManualClock::default() -> Self
-impl core::fmt::Debug for kvlite_testing::ManualClock
-pub fn kvlite_testing::ManualClock::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
 impl kvlite_api::clock::KvClock for kvlite_testing::ManualClock
 pub fn kvlite_testing::ManualClock::now_millis(&self) -> u64
-impl !core::marker::Freeze for kvlite_testing::ManualClock
-impl core::marker::Send for kvlite_testing::ManualClock
-impl core::marker::Sync for kvlite_testing::ManualClock
-impl core::marker::Unpin for kvlite_testing::ManualClock
-impl core::marker::UnsafeUnpin for kvlite_testing::ManualClock
-impl core::panic::unwind_safe::RefUnwindSafe for kvlite_testing::ManualClock
-impl core::panic::unwind_safe::UnwindSafe for kvlite_testing::ManualClock
 pub struct kvlite_testing::Server
 impl kvlite_testing::Server
 pub fn kvlite_testing::Server::addr(&self) -> core::net::socket_addr::SocketAddr
@@ -33,10 +24,3 @@ impl core::fmt::Debug for kvlite_testing::Server
 pub fn kvlite_testing::Server::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
 impl core::ops::drop::Drop for kvlite_testing::Server
 pub fn kvlite_testing::Server::drop(&mut self)
-impl !core::marker::Freeze for kvlite_testing::Server
-impl core::marker::Send for kvlite_testing::Server
-impl core::marker::Sync for kvlite_testing::Server
-impl core::marker::Unpin for kvlite_testing::Server
-impl core::marker::UnsafeUnpin for kvlite_testing::Server
-impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_testing::Server
-impl !core::panic::unwind_safe::UnwindSafe for kvlite_testing::Server

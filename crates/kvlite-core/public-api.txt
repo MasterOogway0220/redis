@@ -82,13 +82,6 @@ pub fn kvlite_core::KvKeyspace::remove(&self, &[u8]) -> bool
 pub fn kvlite_core::KvKeyspace::set(&self, &[u8], &[u8], core::option::Option<core::time::Duration>, kvlite_api::value::KvWriteCondition, bool) -> bool
 pub fn kvlite_core::KvKeyspace::strlen(&self, &[u8]) -> kvlite_api::error::KvResult<u64>
 pub fn kvlite_core::KvKeyspace::time_to_live(&self, &[u8]) -> core::option::Option<core::time::Duration>
-impl !core::marker::Freeze for kvlite_core::KvKeyspace
-impl core::marker::Send for kvlite_core::KvKeyspace
-impl core::marker::Sync for kvlite_core::KvKeyspace
-impl core::marker::Unpin for kvlite_core::KvKeyspace
-impl core::marker::UnsafeUnpin for kvlite_core::KvKeyspace
-impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_core::KvKeyspace
-impl !core::panic::unwind_safe::UnwindSafe for kvlite_core::KvKeyspace
 pub struct kvlite_core::KvStore
 impl kvlite_core::KvStore
 pub fn kvlite_core::KvStore::clear(&self)
@@ -114,30 +107,9 @@ pub fn kvlite_core::KvStore::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::
 impl kvlite_api::store::Store for kvlite_core::KvStore
 pub fn kvlite_core::KvStore::keyspace(&self, usize) -> core::option::Option<&dyn kvlite_api::store::Keyspace>
 pub fn kvlite_core::KvStore::keyspace_count(&self) -> usize
-impl core::marker::Freeze for kvlite_core::KvStore
-impl core::marker::Send for kvlite_core::KvStore
-impl core::marker::Sync for kvlite_core::KvStore
-impl core::marker::Unpin for kvlite_core::KvStore
-impl core::marker::UnsafeUnpin for kvlite_core::KvStore
-impl !core::panic::unwind_safe::RefUnwindSafe for kvlite_core::KvStore
-impl !core::panic::unwind_safe::UnwindSafe for kvlite_core::KvStore
 pub struct kvlite_core::SystemClock
-impl core::clone::Clone for kvlite_core::SystemClock
-pub fn kvlite_core::SystemClock::clone(&self) -> kvlite_core::SystemClock
-impl core::default::Default for kvlite_core::SystemClock
-pub fn kvlite_core::SystemClock::default() -> kvlite_core::SystemClock
-impl core::fmt::Debug for kvlite_core::SystemClock
-pub fn kvlite_core::SystemClock::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
-impl core::marker::Copy for kvlite_core::SystemClock
 impl kvlite_api::clock::KvClock for kvlite_core::SystemClock
 pub fn kvlite_core::SystemClock::now_millis(&self) -> u64
-impl core::marker::Freeze for kvlite_core::SystemClock
-impl core::marker::Send for kvlite_core::SystemClock
-impl core::marker::Sync for kvlite_core::SystemClock
-impl core::marker::Unpin for kvlite_core::SystemClock
-impl core::marker::UnsafeUnpin for kvlite_core::SystemClock
-impl core::panic::unwind_safe::RefUnwindSafe for kvlite_core::SystemClock
-impl core::panic::unwind_safe::UnwindSafe for kvlite_core::SystemClock
 pub fn kvlite_core::format_int(i64) -> alloc::vec::Vec<u8>
 pub fn kvlite_core::format_score(f64) -> alloc::vec::Vec<u8>
 pub fn kvlite_core::parse_int(&[u8]) -> core::option::Option<i64>
